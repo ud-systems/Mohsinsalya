@@ -99,7 +99,7 @@ export function CharityWorksSection({ works, quotes, isLoading, videoUrl }: Char
     loop: allWorks.length > 1,
     align: 'start',
     slidesToScroll: 1,
-    watchDrag: false, // Only move via arrows as requested
+    watchDrag: true, // Enable swipe/drag
   });
 
   const [selectedIndex, setSelectedIndex] = useState(0);

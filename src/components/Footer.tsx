@@ -23,33 +23,30 @@ export function Footer() {
             <a href="/markets" className="text-sm hover:text-primary-foreground transition-colors">Markets</a>
             <a href="/insights" className="text-sm hover:text-primary-foreground transition-colors">Insights</a>
             <a href="/charity-works" className="text-sm hover:text-primary-foreground transition-colors">Charity</a>
-            <a href="/contact" className="text-sm hover:text-primary-foreground transition-colors">Contact</a>
           </nav>
 
           {/* Right - CTA */}
           <div className="flex items-center gap-4">
             <span className="text-sm text-primary-foreground/60">Get in touch</span>
-            <button className="arrow-btn text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground hover:text-primary">
+            <a href="/contact" className="arrow-btn text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground hover:text-primary">
               <ArrowUpRight className="w-5 h-5" />
-            </button>
+            </a>
           </div>
         </div>
 
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-primary-foreground/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-primary-foreground/40 text-xs">
-          <div className="flex flex-col items-center sm:items-start gap-1">
+          <div className="flex items-center gap-1">
             <p>© {new Date().getFullYear()} Mohsin Salya. All rights reserved.</p>
-            <p>
-              Developed by{' '}
-              <a 
-                href="https://iankatana.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-primary-foreground/60 transition-colors border-b border-primary-foreground/20 pb-0.5"
-              >
-                iankatana
-              </a>
-            </p>
+            <a 
+              href="https://iankatana.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-primary-foreground/60 transition-colors ml-1 opacity-20 hover:opacity-100"
+              title="Developer"
+            >
+              <ArrowUpRight className="w-3 h-3" />
+            </a>
           </div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-primary-foreground/60 transition-colors">Privacy</a>
