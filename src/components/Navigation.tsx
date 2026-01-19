@@ -88,7 +88,7 @@ export function Navigation() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 md:hidden bg-background noise-overlay"
           >
-            <div className="flex flex-col h-full p-8 pt-32">
+            <div className="flex flex-col h-full p-8 pt-24">
               <div className="flex-1 space-y-2">
                 {navItems.map((item, index) => {
                   const isActive = location.pathname === item.href;
@@ -102,7 +102,7 @@ export function Navigation() {
                       <Link
                         to={item.href}
                         className={cn(
-                          "block py-4 text-4xl font-serif tracking-tight transition-all duration-300",
+                          "block py-3 text-3xl font-serif tracking-tight transition-all duration-300",
                           isActive ? "text-accent pl-4 border-l-2 border-accent" : "text-black/40 hover:text-black"
                         )}
                       >
