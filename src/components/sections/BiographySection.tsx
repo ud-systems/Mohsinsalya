@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
+import { Link } from 'react-router-dom';
+
 interface BiographyData {
   name: string;
   title: string;
@@ -65,9 +67,9 @@ export function BiographySection({ data, quotes = [], isLoading }: BiographySect
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
             {/* Left - Arrow Link */}
             <div className="hidden lg:block pt-4">
-              <button className="text-black hover:translate-x-1 hover:-translate-y-1 transition-transform duration-300">
+              <Link to="/biography" className="text-black hover:translate-x-1 hover:-translate-y-1 transition-transform duration-300 block">
                 <ArrowUpRight className="w-12 h-12" strokeWidth={1} />
-              </button>
+              </Link>
             </div>
 
             {/* Center - Main Text */}

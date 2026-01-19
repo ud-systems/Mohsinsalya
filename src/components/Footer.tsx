@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 
 export function Footer() {
@@ -19,19 +20,19 @@ export function Footer() {
 
           {/* Center - Navigation */}
           <nav className="flex flex-wrap gap-6 text-primary-foreground/80">
-            <a href="/biography" className="text-sm hover:text-primary-foreground transition-colors">Biography</a>
-            <a href="/markets" className="text-sm hover:text-primary-foreground transition-colors">Markets</a>
-            <a href="/insights" className="text-sm hover:text-primary-foreground transition-colors">Insights</a>
-            <a href="/interviews" className="text-sm hover:text-primary-foreground transition-colors">Interviews</a>
-            <a href="/charity-works" className="text-sm hover:text-primary-foreground transition-colors">Charity</a>
+            <Link to="/biography" className="text-sm hover:text-primary-foreground transition-colors">Biography</Link>
+            <Link to="/markets" className="text-sm hover:text-primary-foreground transition-colors">Markets</Link>
+            <Link to="/insights" className="text-sm hover:text-primary-foreground transition-colors">Insights</Link>
+            <Link to="/interviews" className="text-sm hover:text-primary-foreground transition-colors">Interviews</Link>
+            <Link to="/charity-works" className="text-sm hover:text-primary-foreground transition-colors">Charity</Link>
           </nav>
 
           {/* Right - CTA */}
           <div className="flex items-center gap-4">
             <span className="text-sm text-primary-foreground/60">Get in touch</span>
-            <a href="/contact" className="arrow-btn text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground hover:text-primary">
+            <Link to="/contact" className="arrow-btn text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground hover:text-primary">
               <ArrowUpRight className="w-5 h-5" />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -50,8 +51,8 @@ export function Footer() {
             </a>
           </div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-primary-foreground/60 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-primary-foreground/60 transition-colors">Terms</a>
+            <Link to="#" className="hover:text-primary-foreground/60 transition-colors">Privacy</Link>
+            <Link to="#" className="hover:text-primary-foreground/60 transition-colors">Terms</Link>
           </div>
         </div>
       </div>

@@ -2,6 +2,8 @@ import heroMain from '@/assets/hero-main.webp';
 import { VideoPlayer } from '@/components/ui/video-player';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 
 interface HeroData {
   name: string;
@@ -78,6 +80,17 @@ export function HeroSection({ data, isLoading, videoUrl }: HeroSectionProps) {
             <p className="body-sm sm:body-md uppercase tracking-wide leading-relaxed max-w-md ml-auto mt-8 sm:mt-12 text-primary-foreground/80">
               {content.description}
             </p>
+
+            {/* CTA Link */}
+            <div className="mt-8 sm:mt-12 flex justify-end">
+              <Link 
+                to="/markets" 
+                className="inline-flex items-center gap-2 bg-white text-primary px-6 py-3 rounded-full text-[10px] font-sans font-bold tracking-widest hover:bg-white/90 transition-colors shadow-lg group"
+              >
+                EXPLORE VENTURES
+                <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </div>
           </div>
         </div>
 

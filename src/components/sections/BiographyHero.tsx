@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { SkeletonShimmer } from '@/components/ui/skeleton-shimmer';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowDown } from 'lucide-react';
 
 interface Slide {
   description: string;
@@ -45,6 +47,13 @@ export function BiographyHero({ data, isLoading, slides }: BiographyHeroProps) {
     );
   }
 
+  const scrollToAbout = () => {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative min-h-[90vh] flex items-end overflow-hidden rounded-2xl shadow-2xl">
       {/* Background Image */}
@@ -54,6 +63,15 @@ export function BiographyHero({ data, isLoading, slides }: BiographyHeroProps) {
       >
         <div className="absolute inset-0 bg-black/20" />
       </div>
+
+      {/* Scroll Down Indicator */}
+      <button 
+        onClick={scrollToAbout}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 text-white/60 hover:text-white transition-colors animate-bounce hidden md:block"
+        aria-label="Scroll to content"
+      >
+        <ArrowDown size={32} strokeWidth={1} />
+      </button>
 
       {/* Content Overlay */}
       <div className="relative w-full p-6 sm:p-10 md:p-16 z-10">

@@ -55,7 +55,8 @@ const Interviews = () => {
     <div className="frame-outer">
       <SEO 
         title="Interviews | Mohsin Salya"
-        description="Conversations With Mohsin (CEO) - An inside look at the principles that shape Mohsin’s leadership."
+        description="Conversations With Mohsin (CEO) - A deep dive into the frameworks of discipline, governance, and rebuilding with intention."
+        type="article"
       />
       <Navigation />
       

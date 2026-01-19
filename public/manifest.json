@@ -1,0 +1,21 @@
+{
+  "name": "Mohsin Salya",
+  "short_name": "MS",
+  "description": "Official website of Mohsin Salya - Visionary Entrepreneur and Global Investor.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F0E8",
+  "theme_color": "#2D3639",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
