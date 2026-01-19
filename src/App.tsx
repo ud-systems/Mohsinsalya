@@ -19,6 +19,7 @@ import Markets from "./pages/Markets";
 import MarketDetail from "./pages/MarketDetail";
 import Insights from "./pages/Insights";
 import InsightDetail from "./pages/InsightDetail";
+import Interviews from "./pages/Interviews";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -46,6 +47,7 @@ const AppRoutes = () => {
         <Route path="/markets/:id" element={<PageTransition><MarketDetail /></PageTransition>} />
         <Route path="/insights" element={<PageTransition><Insights /></PageTransition>} />
         <Route path="/insights/:id" element={<PageTransition><InsightDetail /></PageTransition>} />
+        <Route path="/interviews" element={<PageTransition><Interviews /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>

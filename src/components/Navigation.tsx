@@ -12,6 +12,7 @@ const navItems = [
   { label: 'MARKETS', href: '/markets' },
   { label: 'INSIGHTS', href: '/insights' },
   { label: 'CHARITY', href: '/charity-works' },
+  { label: 'INTERVIEWS', href: '/interviews', mobileOnly: true },
 ];
 
 export function Navigation() {
@@ -40,7 +41,7 @@ export function Navigation() {
         <div className="flex items-center gap-1 pointer-events-auto md:bg-white/80 md:backdrop-blur-md md:border md:border-black/5 md:p-2 md:rounded-2xl md:shadow-sm">
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => {
+            {navItems.filter(item => !item.mobileOnly).map((item) => {
               const isActive = location.pathname === item.href || (item.href.startsWith('/#') && location.hash === item.href.substring(1));
               
               return (

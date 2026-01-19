@@ -55,7 +55,7 @@ import {
   TabsTrigger 
 } from "@/components/ui/tabs";
 
-type AdminTab = 'hero' | 'biography' | 'milestones' | 'markets' | 'insights' | 'achievements' | 'charity' | 'stats' | 'media' | 'cta' | 'contact' | 'seo';
+type AdminTab = 'hero' | 'biography' | 'milestones' | 'markets' | 'insights' | 'achievements' | 'charity' | 'interviews' | 'stats' | 'media' | 'cta' | 'contact' | 'seo';
 
 const tabs: { id: AdminTab; label: string; icon: React.ElementType }[] = [
   { id: 'hero', label: 'Hero', icon: Home },
@@ -65,6 +65,7 @@ const tabs: { id: AdminTab; label: string; icon: React.ElementType }[] = [
   { id: 'insights', label: 'Insights', icon: Lightbulb },
   { id: 'achievements', label: 'Achievements', icon: Award },
   { id: 'charity', label: 'Charity', icon: Heart },
+  { id: 'interviews', label: 'Interviews', icon: MessageSquare },
   { id: 'stats', label: 'Stats', icon: BarChart3 },
   { id: 'media', label: 'Media', icon: Video },
   { id: 'cta', label: 'Newsletter', icon: Heart },
@@ -142,6 +143,7 @@ function TabContent({ activeTab }: { activeTab: AdminTab }) {
     case 'insights': return <InsightsEditor data={data.insights} />;
     case 'achievements': return <AchievementsEditor data={data.achievements} />;
     case 'charity': return <CharityEditor works={data.charityWorks} quotes={data.charityQuotes} />;
+    case 'interviews': return <InterviewsEditor content={data.interviewsContent} qa={data.interviewsQA} />;
     case 'stats': return <StatsEditor data={data.stats} />;
     case 'media': return <MediaEditor data={data.media} />;
     case 'cta': return <CTAEditor data={data.cta} subscribers={data.newsletterSubscribers} />;
@@ -169,6 +171,8 @@ function useAdminData() {
   const contactSubmissions = useQuery({ queryKey: ['admin', 'contact_submissions'], queryFn: async () => (await supabase.from('contact_submissions').select('*').order('created_at', { ascending: false })).data || [] });
   const seoGlobal = useQuery({ queryKey: ['admin', 'seo_settings'], queryFn: async () => (await supabase.from('seo_settings').select('*').single()).data });
   const seoPages = useQuery({ queryKey: ['admin', 'page_metadata'], queryFn: async () => (await supabase.from('page_metadata').select('*')).data || [] });
+  const interviewsContent = useQuery({ queryKey: ['admin', 'interviews_content'], queryFn: async () => (await supabase.from('interviews_content').select('*').single()).data });
+  const interviewsQA = useQuery({ queryKey: ['admin', 'interviews_qa'], queryFn: async () => (await supabase.from('interviews_qa').select('*').order('order_index')).data || [] });
 
   return {
     hero: hero.data,
@@ -180,6 +184,8 @@ function useAdminData() {
     achievements: achievements.data || [],
     charityWorks: charityWorks.data || [],
     charityQuotes: charityQuotes.data || [],
+    interviewsContent: interviewsContent.data,
+    interviewsQA: interviewsQA.data || [],
     stats: stats.data || [],
     media: media.data || [],
     cta: cta.data,
@@ -188,7 +194,7 @@ function useAdminData() {
     contactSubmissions: contactSubmissions.data || [],
     seoGlobal: seoGlobal.data,
     seoPages: seoPages.data || [],
-    isLoading: hero.isLoading || biography.isLoading || bioQuotes.isLoading || milestones.isLoading || markets.isLoading || insights.isLoading || achievements.isLoading || charityWorks.isLoading || charityQuotes.isLoading || stats.isLoading || media.isLoading || cta.isLoading || subscribers.isLoading || contactSettings.isLoading || contactSubmissions.isLoading || seoGlobal.isLoading || seoPages.isLoading
+    isLoading: hero.isLoading || biography.isLoading || bioQuotes.isLoading || milestones.isLoading || markets.isLoading || insights.isLoading || achievements.isLoading || charityWorks.isLoading || charityQuotes.isLoading || stats.isLoading || media.isLoading || cta.isLoading || subscribers.isLoading || contactSettings.isLoading || contactSubmissions.isLoading || seoGlobal.isLoading || seoPages.isLoading || interviewsContent.isLoading || interviewsQA.isLoading
   };
 }
 
@@ -1051,3 +1057,124 @@ function SEOEditor({ global, pages }: { global: any; pages: any[] }) {
     </div>
   );
 }
+
+function InterviewsEditor({ content, qa }: { content: any; qa: any[] }) {
+  const [formData, setFormData] = useState(content || {});
+  const [isQADialogOpen, setIsQADialogOpen] = useState(false);
+  const [editingQA, setEditingQA] = useState<any>(null);
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const qaActions = useAdminActions('interviews_qa', ['admin', 'interviews_qa']);
+
+  const contentMutation = useMutation({
+    mutationFn: async (newData: any) => {
+      await supabase.from('interviews_content').upsert({ ...newData, id: content?.id || undefined });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'interviews_content'] });
+      toast({ title: 'Interviews Content Updated' });
+    }
+  });
+
+  const qaMutation = useMutation({
+    mutationFn: async (item: any) => {
+      if (item.id) await supabase.from('interviews_qa').update(item).eq('id', item.id);
+      else await supabase.from('interviews_qa').insert({ ...item, order_index: qa.length + 1 });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'interviews_qa'] });
+      setIsQADialogOpen(false);
+      toast({ title: editingQA ? 'Q&A Updated' : 'Q&A Added' });
+    }
+  });
+
+  return (
+    <div className="space-y-12">
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <h2 className="font-serif text-xl font-medium">Interviews Page Content</h2>
+          <Button onClick={() => contentMutation.mutate(formData)} disabled={contentMutation.isPending}>
+            {contentMutation.isPending ? <Loader2 className="animate-spin" /> : <Save className="mr-2" />}
+            Save Changes
+          </Button>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-6">
+          <div className="space-y-2"><Label>Hero Title</Label><Input value={formData.hero_title || ''} onChange={e => setFormData({ ...formData, hero_title: e.target.value })} /></div>
+          <div className="space-y-2"><Label>Hero Subtitle</Label><Input value={formData.hero_subtitle || ''} onChange={e => setFormData({ ...formData, hero_subtitle: e.target.value })} /></div>
+          <div className="sm:col-span-2 space-y-2"><Label>Hero Description</Label><Textarea value={formData.hero_description || ''} onChange={e => setFormData({ ...formData, hero_description: e.target.value })} rows={3} /></div>
+          <div className="space-y-2"><Label>Hero Image URL</Label><Input value={formData.hero_image_url || ''} onChange={e => setFormData({ ...formData, hero_image_url: e.target.value })} /></div>
+          
+          <div className="sm:col-span-2 pt-6 border-t"><h3 className="text-sm font-bold uppercase tracking-widest text-black/40 mb-4">Philosophy Section</h3></div>
+          <div className="sm:col-span-2 space-y-2"><Label>Philosophy Title</Label><Input value={formData.philosophy_title || ''} onChange={e => setFormData({ ...formData, philosophy_title: e.target.value })} /></div>
+          <div className="sm:col-span-2 space-y-2"><Label>Philosophy Subtitle</Label><Textarea value={formData.philosophy_subtitle || ''} onChange={e => setFormData({ ...formData, philosophy_subtitle: e.target.value })} rows={3} /></div>
+
+          <div className="sm:col-span-2 pt-6 border-t"><h3 className="text-sm font-bold uppercase tracking-widest text-black/40 mb-4">Growth Section</h3></div>
+          <div className="sm:col-span-2 space-y-2"><Label>Growth Title</Label><Input value={formData.growth_title || ''} onChange={e => setFormData({ ...formData, growth_title: e.target.value })} /></div>
+          <div className="sm:col-span-2 space-y-2"><Label>Growth Subtitle</Label><Textarea value={formData.growth_subtitle || ''} onChange={e => setFormData({ ...formData, growth_subtitle: e.target.value })} rows={3} /></div>
+        </div>
+      </div>
+
+      <div className="space-y-6 pt-12 border-t">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <h2 className="font-serif text-xl font-medium">Questions & Answers</h2>
+            {qaActions.selectedIds.length > 0 && (
+              <Button variant="destructive" size="sm" onClick={() => qaActions.bulkDeleteMutation.mutate()}>
+                Delete ({qaActions.selectedIds.length})
+              </Button>
+            )}
+          </div>
+          <Button onClick={() => { setEditingQA(null); setIsQADialogOpen(true); }}>
+            <Plus className="w-4 h-4 mr-2" /> Add Question
+          </Button>
+        </div>
+        <div className="space-y-4">
+          {qa.map((item, index) => (
+            <div key={item.id} className="p-4 bg-secondary/50 rounded-lg group relative flex gap-4">
+              <div className="pt-1">
+                <Checkbox checked={qaActions.selectedIds.includes(item.id)} onCheckedChange={() => qaActions.toggleSelect(item.id)} />
+              </div>
+              <div className="flex-1">
+                <p className="font-medium">Q{index + 1}: {item.question}</p>
+                <p className="text-sm text-muted-foreground line-clamp-2 mt-1">{item.answer}</p>
+              </div>
+              <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button onClick={() => { setEditingQA(item); setIsQADialogOpen(true); }}><Pencil className="w-4 h-4" /></button>
+                <button onClick={() => qaActions.duplicateMutation.mutate(item.id)}><Copy className="w-4 h-4" /></button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <Dialog open={isQADialogOpen} onOpenChange={setIsQADialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>{editingQA ? 'Edit Question' : 'Add Question'}</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label>Question</Label>
+              <Input id="qQuestion" defaultValue={editingQA?.question} />
+            </div>
+            <div className="grid gap-2">
+              <Label>Answer</Label>
+              <Textarea id="qAnswer" defaultValue={editingQA?.answer} rows={8} />
+            </div>
+            <div className="grid gap-2">
+              <Label>Order Index</Label>
+              <Input id="qOrder" type="number" defaultValue={editingQA?.order_index ?? qa.length + 1} />
+            </div>
+          </div>
+          <Button onClick={() => {
+            const question = (document.getElementById('qQuestion') as HTMLInputElement).value;
+            const answer = (document.getElementById('qAnswer') as HTMLTextAreaElement).value;
+            const order_index = parseInt((document.getElementById('qOrder') as HTMLInputElement).value);
+            qaMutation.mutate({ ...editingQA, question, answer, order_index });
+          }}>Save Q&A</Button>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
