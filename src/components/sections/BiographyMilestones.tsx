@@ -140,7 +140,7 @@ export function BiographyMilestones({ milestones, isLoading }: BiographyMileston
                       <div className="h-px flex-1 bg-black/10" />
                     </div>
                     
-                    <h2 className="text-3xl sm:text-7xl md:text-8xl lg:text-9xl font-serif text-black mb-6 md:mb-12 tracking-tight leading-[0.85] font-extralight italic">
+                    <h2 className="display-xl text-black mb-6 md:mb-12 italic font-extralight">
                       {milestone.title}
                     </h2>
                     

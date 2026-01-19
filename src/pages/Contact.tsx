@@ -125,7 +125,7 @@ const Contact = () => {
               <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-16">
                 <div className="flex-1">
                   <p className="font-serif italic text-xl text-muted-foreground mb-2">Get in Touch</p>
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] xl:text-[6rem] font-serif font-medium leading-[1.1] tracking-tight mb-8 whitespace-nowrap">
+                  <h1 className="display-xl mb-8 whitespace-nowrap">
                     Work With Me
                   </h1>
                 </div>

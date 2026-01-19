@@ -139,7 +139,7 @@ export function CharityWorksSection({ works, quotes, isLoading, videoUrl }: Char
           <div className="flex flex-col lg:flex-row justify-between lg:items-end items-start gap-6">
             <div className="text-left">
               <p className="font-serif italic text-lg sm:text-xl text-muted-foreground mb-2">Impact Beyond Markets</p>
-              <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-medium leading-[0.95] tracking-tight">
+              <h2 className="display-xl">
                 Charity Works
               </h2>
             </div>
@@ -219,8 +219,8 @@ export function CharityWorksSection({ works, quotes, isLoading, videoUrl }: Char
             ))}
           </div>
 
-          {/* Dots Navigation */}
-          <div className="flex justify-center gap-2 mt-12">
+          {/* Dots Navigation - Hidden on desktop */}
+          <div className="flex justify-center gap-2 mt-12 md:hidden">
             {scrollSnaps.map((_, index) => (
               <button
                 key={index}

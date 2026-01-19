@@ -101,7 +101,7 @@ const CharityWorks = () => {
                   <span className="w-8 h-[1px] bg-primary"></span>
                   <span>Impact Beyond Borders</span>
                 </div>
-                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-medium leading-none tracking-tight text-[#1a1a1a]">
+                <h1 className="display-xl text-[#1a1a1a]">
                   Charity Works
                 </h1>
               </div>

@@ -56,7 +56,7 @@ export function CTASection({ settings, isLoading }: CTASectionProps) {
       />
       <div className="max-w-5xl mx-auto text-center space-y-12">
         <ScrollReveal>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif font-medium leading-tight max-w-4xl mx-auto">
+          <h2 className="display-lg max-w-4xl mx-auto">
             {content.title}
           </h2>
         </ScrollReveal>

@@ -91,7 +91,7 @@ export function AchievementsSection({ achievements, isLoading }: AchievementsSec
           <div className="space-y-8">
             <div>
               <p className="font-serif italic text-lg sm:text-xl text-muted-foreground mb-2">Mohsin Salya's</p>
-              <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-medium leading-[0.95] tracking-tight">
+              <h2 className="display-xl">
                 World Of Achievements
               </h2>
             </div>

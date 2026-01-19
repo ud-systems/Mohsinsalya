@@ -164,7 +164,7 @@ export function InsightsSection({ insights, isLoading }: InsightsSectionProps) {
           <div className="flex flex-col lg:flex-row justify-between items-start gap-6 lg:gap-12">
             <div>
               <p className="font-serif italic text-lg sm:text-xl text-gray-300 mb-2">Mohsin Salya's</p>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-medium leading-[0.95] tracking-tight mb-4">
+              <h2 className="display-xl mb-4">
                 Expert Insights
               </h2>
               <div className="flex items-center gap-2 text-sm text-gray-400">

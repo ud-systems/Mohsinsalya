@@ -40,7 +40,7 @@ export function BiographyHero({ data, isLoading }: BiographyHeroProps) {
               <p className="text-xs sm:text-sm tracking-[0.2em] font-sans mb-3 sm:mb-4 text-black/60 uppercase">
                 {data?.hero_title || 'BUILDING BUSINESSES,'}
               </p>
-              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extralight leading-[0.9] text-black tracking-tight break-words">
+              <h1 className="display-xl text-black break-words">
                 {data?.hero_subtitle?.split(' ')[0] || 'REBUILDING'}<br />
                 {data?.hero_subtitle?.split(' ')[1] || 'STANDARDS'}
               </h1>

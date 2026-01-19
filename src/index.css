@@ -183,17 +183,21 @@
     @apply text-accent;
   }
 
-  /* Large display typography */
+  /* Large display typography - Refined 2026 responsiveness */
   .display-xl {
-    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-medium leading-[0.95] tracking-tight;
+    @apply text-[clamp(2.5rem,5vw,4.5rem)] font-serif font-medium leading-[0.95] tracking-tight;
   }
 
   .display-lg {
-    @apply text-3xl sm:text-4xl md:text-5xl font-serif font-medium leading-[1.1] tracking-tight;
+    @apply text-[clamp(2rem,4vw,3.25rem)] font-serif font-medium leading-[1.05] tracking-tight;
   }
 
   .display-md {
-    @apply text-2xl sm:text-3xl md:text-4xl font-serif font-medium leading-[1.15];
+    @apply text-[clamp(1.5rem,3vw,2.25rem)] font-serif font-medium leading-[1.15] tracking-tight;
+  }
+
+  .display-sm {
+    @apply text-[clamp(1.25rem,2.5vw,1.75rem)] font-serif font-medium leading-[1.2] tracking-tight;
   }
 
   /* Body text sizes - smaller on mobile */
