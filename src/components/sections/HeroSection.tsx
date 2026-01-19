@@ -46,7 +46,7 @@ export function HeroSection({ data, isLoading, videoUrl }: HeroSectionProps) {
       >
         <img
           src={heroMain}
-          alt="Visionary Entrepreneur"
+          alt="Mohsin Salya"
           className="w-full h-full object-cover object-top scale-110"
         />
         {/* Gradient overlay for text readability */}

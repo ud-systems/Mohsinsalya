@@ -34,7 +34,7 @@ export function SEO({ title, description, image, type = 'website' }: SEOProps) {
 
   const siteName = globalSeo?.site_name || 'Mohsin Salya';
   const seoTitle = title || pageMeta?.title || siteName;
-  const seoDescription = description || pageMeta?.description || 'Visionary Entrepreneur and Global Investor.';
+  const seoDescription = description || pageMeta?.description || 'Official website of Mohsin Salya - Visionary Entrepreneur and Global Investor.';
   const seoImage = image || pageMeta?.og_image || globalSeo?.default_og_image || '/favicon.png';
   const twitterHandle = globalSeo?.twitter_handle || '';
   const googleVerification = globalSeo?.google_search_console_id || '';

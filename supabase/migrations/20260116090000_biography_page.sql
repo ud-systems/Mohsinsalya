@@ -45,4 +45,4 @@ UPDATE biography_content SET
   hero_description = 'Business becomes meaningful when it stands for something bigger than profit, when it raises expectations and resets what’s possible',
   hero_quote = 'Mohsin Salya',
   hero_image_url = '/assets/biographyhero.webp'
-WHERE name = 'The Visionary';
+WHERE name = 'Mohsin Salya';

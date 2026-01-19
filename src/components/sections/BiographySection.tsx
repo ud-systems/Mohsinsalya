@@ -23,7 +23,7 @@ export function BiographySection({ data, quotes = [], isLoading }: BiographySect
   const [currentQuote, setCurrentQuote] = useState(0);
 
   const content = data || {
-    name: 'The Visionary',
+    name: 'Mohsin Salya',
     title: 'The Man Behind the Markets',
     subtitle: '',
     avatar_url: null,

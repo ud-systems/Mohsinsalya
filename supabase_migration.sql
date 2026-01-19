@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS biography_content (
 
 DELETE FROM biography_content;
 INSERT INTO biography_content (name, title)
-VALUES ('The Visionary', 'The Man Behind the Markets');
+VALUES ('Mohsin Salya', 'The Man Behind the Markets');
 
 CREATE TABLE IF NOT EXISTS biography_quotes (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,

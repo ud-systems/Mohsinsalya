@@ -58,7 +58,7 @@ export function InitialLoader() {
               transition={{ delay: 0.8, duration: 0.8 }}
               className="text-[10px] uppercase tracking-[0.2em] mt-4 font-sans"
             >
-              Visionary Entrepreneur
+              Mohsin Salya
             </motion.p>
           </div>
         </motion.div>

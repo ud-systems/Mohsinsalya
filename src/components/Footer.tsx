@@ -8,9 +8,9 @@ export function Footer() {
           {/* Left - Logo & Tagline */}
           <div className="text-primary-foreground">
             <h3 className="font-serif text-2xl sm:text-3xl font-medium mb-2">
-              <span className="text-primary-foreground/60 text-sm italic">The</span>
+              Mohsin
               <br />
-              Visionary
+              Salya
             </h3>
             <p className="body-sm text-primary-foreground/60 max-w-xs">
               Rebuilding standards across industries
@@ -37,7 +37,20 @@ export function Footer() {
 
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-primary-foreground/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-primary-foreground/40 text-xs">
-          <p>© {new Date().getFullYear()} The Visionary. All rights reserved.</p>
+          <div className="flex flex-col items-center sm:items-start gap-1">
+            <p>© {new Date().getFullYear()} Mohsin Salya. All rights reserved.</p>
+            <p>
+              Developed by{' '}
+              <a 
+                href="https://iankatana.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-primary-foreground/60 transition-colors border-b border-primary-foreground/20 pb-0.5"
+              >
+                iankatana
+              </a>
+            </p>
+          </div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-primary-foreground/60 transition-colors">Privacy</a>
             <a href="#" className="hover:text-primary-foreground/60 transition-colors">Terms</a>
