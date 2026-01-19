@@ -104,12 +104,12 @@ export function AchievementsSection({ achievements, isLoading }: AchievementsSec
               </div>
               <div>
                 <p className="body-md text-muted-foreground leading-relaxed">
-                  Across markets, Mohsin's success is measured not by scale alone but by endurance, the ability to adapt, diversify, and rise stronger with every challenge. Each milestone reflects a single truth: great empires are built, not born.
+                  Across markets, Mohsin's success is measured not by scale alone but by endurance, the ability to adapt, diversify, and rise stronger with every challenge.
                 </p>
               </div>
               <div className="md:text-right">
                 <p className="body-md text-muted-foreground italic max-w-xs md:ml-auto">
-                  Power is the quiet reward of perseverance.
+                  Power is the quiet reward of perseverance, Each milestone reflects a single truth: great empires are built, not born.
                 </p>
               </div>
             </div>
