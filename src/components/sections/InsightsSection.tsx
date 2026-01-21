@@ -172,7 +172,7 @@ export function InsightsSection({ insights, isLoading }: InsightsSectionProps) {
               </div>
             </div>
             <p className="max-w-sm text-gray-400 text-sm sm:text-base leading-relaxed lg:text-right">
-              In a world of constant change, Mohsin shares grounded perspectives shaped by three decades of building, adapting, and leading.
+              Mohsin shares the principles guiding his decisions, offering clarity, discipline, and an experience-driven perspective.
             </p>
           </div>
         </ScrollReveal>

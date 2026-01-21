@@ -79,6 +79,8 @@ const Biography = () => {
             data={bioData} 
             quotes={quotes} 
             isLoading={bioLoading || quotesLoading} 
+            tag="biography"
+            descriptionOverride="Mohsin Salya is an entrepreneur and investor with ventures spanning fashion, property, distribution, and luxury assets. His career reflects one principle- discipline builds durability."
           />
         </div>
 

@@ -168,6 +168,8 @@ const Index = () => {
           data={bioData} 
           quotes={quotes} 
           isLoading={bioLoading || quotesLoading} 
+          tag="homepage"
+          descriptionOverride="From UK fashion to Dubai real estate, Mohsin Salya has built ventures across continents with focus, foresight, and disciplined growth."
         />
         <MarketsSection 
           markets={markets} 
@@ -178,8 +180,9 @@ const Index = () => {
         <AchievementsSection achievements={achievements} isLoading={achievementsLoading} />
         <CharityWorksSection 
           works={charityWorks} 
-          quotes={charityQuotes} 
+          quotes={quotes} 
           isLoading={charityLoading || charityQuotesLoading} 
+          tag="charity"
         />
         <CTASection settings={ctaData} isLoading={ctaLoading} />
       </main>

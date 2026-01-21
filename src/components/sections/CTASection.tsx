@@ -40,7 +40,7 @@ export function CTASection({ settings, isLoading }: CTASectionProps) {
   };
 
   const content = settings || {
-    title: 'For The Ones Climbing Back, Turn Bruises Into Billion-Dollar Moves',
+    title: 'Join Mohsin’s circle for real stories, reflections, and insights, where resilience meets results.',
     disclaimer: "By subscribing, you'll receive thoughtful updates, insights, and inspiration straight to your inbox. No spam just authentic content and stories worth your time.",
     button_text: 'Start Building',
     placeholder_text: 'Enter Your Email Address'

@@ -89,10 +89,24 @@ const defaultQuotes: CharityQuote[] = [
   },
 ];
 
-export function CharityWorksSection({ works, quotes, isLoading, videoUrl }: CharityWorksSectionProps) {
+interface CharityWorksSectionProps {
+  works?: CharityWork[];
+  quotes?: CharityQuote[];
+  isLoading?: boolean;
+  videoUrl?: string;
+  tag?: string;
+}
+
+export function CharityWorksSection({ works, quotes = [], isLoading, videoUrl, tag }: CharityWorksSectionProps) {
   const isMobile = useIsMobile();
   const allWorks = works && works.length > 0 ? works : defaultWorks;
-  const allQuotes = quotes && quotes.length > 0 ? quotes : defaultQuotes;
+  
+  // Filter quotes by tag if provided
+  const filteredQuotes = tag 
+    ? (quotes as any[]).filter(q => q.tags?.includes(tag))
+    : quotes;
+
+  const allQuotes = filteredQuotes.length > 0 ? filteredQuotes : defaultQuotes;
   
   const [currentQuote, setCurrentQuote] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ 

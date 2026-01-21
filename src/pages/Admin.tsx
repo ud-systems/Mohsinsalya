@@ -55,11 +55,12 @@ import {
   TabsTrigger 
 } from "@/components/ui/tabs";
 
-type AdminTab = 'hero' | 'biography' | 'milestones' | 'markets' | 'insights' | 'achievements' | 'charity' | 'interviews' | 'stats' | 'media' | 'cta' | 'contact' | 'seo';
+type AdminTab = 'hero' | 'biography' | 'quotes' | 'milestones' | 'markets' | 'insights' | 'achievements' | 'charity' | 'interviews' | 'stats' | 'media' | 'cta' | 'contact' | 'seo';
 
 const tabs: { id: AdminTab; label: string; icon: React.ElementType }[] = [
   { id: 'hero', label: 'Hero', icon: Home },
   { id: 'biography', label: 'Biography', icon: User },
+  { id: 'quotes', label: 'Quotes', icon: Quote },
   { id: 'milestones', label: 'Milestones', icon: BarChart3 },
   { id: 'markets', label: 'Markets', icon: Building2 },
   { id: 'insights', label: 'Insights', icon: Lightbulb },
@@ -138,6 +139,7 @@ function TabContent({ activeTab }: { activeTab: AdminTab }) {
   switch (activeTab) {
     case 'hero': return <HeroEditor data={data.hero} />;
     case 'biography': return <BiographyEditor data={data.biography} quotes={data.bioQuotes} />;
+    case 'quotes': return <QuotesManager data={data.bioQuotes} />;
     case 'milestones': return <MilestonesEditor data={data.milestones} />;
     case 'markets': return <MarketsEditor data={data.markets} />;
     case 'insights': return <InsightsEditor data={data.insights} />;
@@ -248,6 +250,96 @@ function HeroEditor({ data }: { data: any }) {
   );
 }
 
+function QuotesManager({ data }: { data: any[] }) {
+  const queryClient = useQueryClient();
+  const [editingItem, setEditingItem] = useState<any>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { toast } = useToast();
+
+  const mutation = useMutation({
+    mutationFn: async (item: any) => {
+      if (item.id) await supabase.from('biography_quotes').update(item).eq('id', item.id);
+      else await supabase.from('biography_quotes').insert({ ...item, order_index: data.length });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'biography_quotes'] });
+      setIsDialogOpen(false);
+      toast({ title: 'Quote Saved' });
+    }
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => { await supabase.from('biography_quotes').delete().eq('id', id); },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'biography_quotes'] });
+      toast({ title: 'Quote Deleted' });
+    }
+  });
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="font-serif text-xl font-medium">Manage Quotes</h2>
+        <Button onClick={() => { setEditingItem({ quote: '', tags: [] }); setIsDialogOpen(true); }}>
+          <Plus className="w-4 h-4 mr-2" /> Add Quote
+        </Button>
+      </div>
+
+      <div className="space-y-4">
+        {data.map((q) => (
+          <div key={q.id} className="p-4 bg-secondary/50 rounded-lg group relative">
+            <div className="flex justify-between items-start gap-4">
+              <div className="flex-1 space-y-2">
+                <p className="body-md italic font-serif text-foreground">"{q.quote}"</p>
+                <div className="flex flex-wrap gap-2">
+                  {q.tags?.map((tag: string) => (
+                    <span key={tag} className="text-[10px] bg-accent/10 text-accent px-2 py-0.5 rounded-full uppercase font-bold tracking-widest">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button onClick={() => { setEditingItem(q); setIsDialogOpen(true); }} className="p-2 hover:bg-black/5 rounded-full transition-colors">
+                  <Pencil className="w-4 h-4" />
+                </button>
+                <button onClick={() => deleteMutation.mutate(q.id)} className="p-2 hover:bg-destructive/10 text-destructive rounded-full transition-colors">
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader><DialogTitle>{editingItem?.id ? 'Edit Quote' : 'Add Quote'}</DialogTitle></DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label>Quote Text</Label>
+              <Textarea 
+                value={editingItem?.quote || ''} 
+                onChange={e => setEditingItem({ ...editingItem, quote: e.target.value })} 
+                rows={4} 
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label>Tags (comma separated)</Label>
+              <Input 
+                value={editingItem?.tags?.join(', ') || ''} 
+                onChange={e => setEditingItem({ ...editingItem, tags: e.target.value.split(',').map(t => t.trim()).filter(Boolean) })}
+                placeholder="e.g. homepage, biography, charity"
+              />
+            </div>
+          </div>
+          <Button onClick={() => mutation.mutate(editingItem)}>Save Quote</Button>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
 function BiographyEditor({ data, quotes }: { data: any; quotes: any[] }) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -257,9 +349,9 @@ function BiographyEditor({ data, quotes }: { data: any; quotes: any[] }) {
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['admin', 'biography'] }); toast({ title: 'Biography Updated' }); }
   });
   const quoteMutation = useMutation({
-    mutationFn: async ({ id, quote }: { id?: string; quote: string }) => {
-      if (id) await supabase.from('biography_quotes').update({ quote }).eq('id', id);
-      else await supabase.from('biography_quotes').insert({ quote, order_index: quotes.length });
+    mutationFn: async ({ id, quote, tags }: { id?: string; quote: string; tags?: string[] }) => {
+      if (id) await supabase.from('biography_quotes').update({ quote, tags }).eq('id', id);
+      else await supabase.from('biography_quotes').insert({ quote, tags: tags || [], order_index: quotes.length });
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin', 'biography_quotes'] })
   });
@@ -274,7 +366,24 @@ function BiographyEditor({ data, quotes }: { data: any; quotes: any[] }) {
         <div className="space-y-2"><Label>Name</Label><Input value={formData.name || ''} onChange={e => setFormData({ ...formData, name: e.target.value })} /></div>
         <div className="space-y-2"><Label>Title</Label><Input value={formData.title || ''} onChange={e => setFormData({ ...formData, title: e.target.value })} /></div>
       </div>
-      <div className="pt-6 border-t"><div className="flex justify-between items-center mb-4"><div className="flex items-center gap-2"><Quote className="w-4 h-4" /><h3>Quotes</h3></div><Button variant="outline" size="sm" onClick={() => quoteMutation.mutate({ quote: 'New quote here...' })}><Plus className="w-4 h-4 mr-2" /> Add Quote</Button></div><div className="space-y-4">{quotes.map((q, i) => (<div key={q.id} className="flex gap-4 p-4 bg-secondary/50 rounded-lg"><span className="text-muted-foreground text-sm">{i + 1}.</span><Textarea defaultValue={q.quote} onBlur={e => quoteMutation.mutate({ id: q.id, quote: e.target.value })} rows={2} className="flex-1" /><button onClick={() => deleteQuoteMutation.mutate(q.id)} className="text-destructive"><Trash2 className="w-4 h-4" /></button></div>))}</div></div>
+      <div className="pt-6 border-t">
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center gap-2">
+            <Quote className="w-4 h-4" />
+            <h3>Quotes Preview (Page Specific)</h3>
+          </div>
+        </div>
+        <div className="space-y-4">
+          {quotes.filter(q => q.tags?.includes('biography')).map((q, i) => (
+            <div key={q.id} className="p-4 bg-secondary/50 rounded-lg">
+              <p className="body-md italic font-serif">"{q.quote}"</p>
+            </div>
+          ))}
+          {quotes.filter(q => q.tags?.includes('biography')).length === 0 && (
+            <p className="text-sm text-muted-foreground italic">No quotes tagged with 'biography' yet.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
@@ -525,8 +634,23 @@ function CharityEditor({ works, quotes }: { works: any[]; quotes: any[] }) {
       <div className="space-y-6"><div className="flex justify-between items-center"><div className="flex items-center gap-4"><h2 className="font-serif text-xl font-medium">Charity Works</h2>{worksActions.selectedIds.length > 0 && <Button variant="destructive" size="sm" onClick={() => worksActions.bulkDeleteMutation.mutate()}>Delete ({worksActions.selectedIds.length})</Button>}</div><Button onClick={() => { setEditingWork(null); setIsWorkDialogOpen(true); }}><Plus className="w-4 h-4 mr-2" /> Add Work</Button></div>
         <div className="space-y-2">{works.map((w) => (<div key={w.id} className="flex items-center gap-4 p-4 bg-secondary/50 rounded-lg group"><Checkbox checked={worksActions.selectedIds.includes(w.id)} onCheckedChange={() => worksActions.toggleSelect(w.id)} /><div className="flex-1"><p className="font-medium">{w.title}</p><p className="text-xs text-muted-foreground">{w.location} • {w.work_date}</p></div><div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"><button onClick={() => worksActions.duplicateMutation.mutate(w.id)}><Copy className="w-4 h-4" /></button><button onClick={() => { setEditingWork(w); setIsWorkDialogOpen(true); }}><Pencil className="w-4 h-4" /></button></div></div>))}</div>
       </div>
-      <div className="space-y-6 pt-8 border-t"><div className="flex justify-between items-center"><div className="flex items-center gap-4"><h2 className="font-serif text-xl font-medium">Charity Quotes</h2>{quotesActions.selectedIds.length > 0 && <Button variant="destructive" size="sm" onClick={() => quotesActions.bulkDeleteMutation.mutate()}>Delete ({quotesActions.selectedIds.length})</Button>}</div><Button onClick={() => { setEditingQuote(null); setIsQuoteDialogOpen(true); }}><Plus className="w-4 h-4 mr-2" /> Add Quote</Button></div>
-        <div className="space-y-2">{quotes.map((q) => (<div key={q.id} className="flex items-center gap-4 p-4 bg-secondary/50 rounded-lg group"><Checkbox checked={quotesActions.selectedIds.includes(q.id)} onCheckedChange={() => quotesActions.toggleSelect(q.id)} /><p className="flex-1 body-md italic line-clamp-1">"{q.quote}"</p><div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"><button onClick={() => quotesActions.duplicateMutation.mutate(q.id)}><Copy className="w-4 h-4" /></button><button onClick={() => { setEditingQuote(q); setIsQuoteDialogOpen(true); }}><Pencil className="w-4 h-4" /></button></div></div>))}</div>
+      <div className="space-y-6 pt-8 border-t">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <Heart className="w-4 h-4" />
+            <h3>Charity Quotes Preview</h3>
+          </div>
+        </div>
+        <div className="space-y-2">
+          {quotes.filter(q => q.tags?.includes('charity')).map((q) => (
+            <div key={q.id} className="p-4 bg-secondary/50 rounded-lg group">
+              <p className="body-md italic font-serif">"{q.quote}"</p>
+            </div>
+          ))}
+          {quotes.filter(q => q.tags?.includes('charity')).length === 0 && (
+            <p className="text-sm text-muted-foreground italic">No quotes tagged with 'charity' yet.</p>
+          )}
+        </div>
       </div>
       <Dialog open={isWorkDialogOpen} onOpenChange={setIsWorkDialogOpen}><DialogContent className="max-w-2xl"><DialogHeader><DialogTitle>{editingWork ? 'Edit Work' : 'Add Work'}</DialogTitle></DialogHeader>
         <div className="grid gap-4 py-4">

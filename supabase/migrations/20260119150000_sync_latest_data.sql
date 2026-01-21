@@ -113,7 +113,7 @@ INSERT INTO media_settings (id, key, url, description, updated_at) VALUES ('bb33
 
 -- Data for newsletter_settings
 DELETE FROM newsletter_settings;
-INSERT INTO newsletter_settings (id, title, disclaimer, button_text, placeholder_text, created_at, updated_at) VALUES ('a0fe4938-5e62-402c-af03-4e904ad3d8c8', 'For The Ones Climbing Back, Turn Bruises Into Billion-Dollar Moves', 'By subscribing, you''ll receive thoughtful updates, insights, and inspiration straight to your inbox. No spam just authentic content and stories worth your time.', 'Start Building', 'Enter Your Email Address', '2026-01-16T13:20:01.079817+00:00', '2026-01-16T13:20:01.079817+00:00');
+INSERT INTO newsletter_settings (id, title, disclaimer, button_text, placeholder_text, created_at, updated_at) VALUES ('a0fe4938-5e62-402c-af03-4e904ad3d8c8', 'Join Mohsin’s circle for real stories, reflections, and insights, where resilience meets results.', 'By subscribing, you''ll receive thoughtful updates, insights, and inspiration straight to your inbox. No spam just authentic content and stories worth your time.', 'Start Building', 'Enter Your Email Address', '2026-01-16T13:20:01.079817+00:00', '2026-01-16T13:20:01.079817+00:00');
 
 -- Data for seo_settings
 DELETE FROM seo_settings;

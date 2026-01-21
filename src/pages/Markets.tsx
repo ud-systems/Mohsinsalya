@@ -51,7 +51,7 @@ const Markets = () => {
             <div className="text-center mb-16">
               <h1 className="display-xl mb-6">MARKETS WE BUILD IN</h1>
               <p className="body-md text-muted-foreground max-w-3xl mx-auto">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Mohsin Salya’s business journey spans continents, industries, and eras, evolving from fashion floors in India and the UK to billion-dirham real estate portfolios in Dubai. His approach is simple yet powerful: build with discipline, transform with clarity, and scale with purpose.
               </p>
             </div>
           </ScrollReveal>

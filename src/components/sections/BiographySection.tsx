@@ -19,9 +19,11 @@ interface BiographySectionProps {
   data?: BiographyData | null;
   quotes?: Quote[];
   isLoading?: boolean;
+  tag?: string;
+  descriptionOverride?: string;
 }
 
-export function BiographySection({ data, quotes = [], isLoading }: BiographySectionProps) {
+export function BiographySection({ data, quotes = [], isLoading, tag, descriptionOverride }: BiographySectionProps) {
   const [currentQuote, setCurrentQuote] = useState(0);
 
   const content = data || {
@@ -42,7 +44,12 @@ export function BiographySection({ data, quotes = [], isLoading }: BiographySect
     },
   ];
 
-  const allQuotes = quotes.length > 0 ? quotes : defaultQuotes;
+  // Filter quotes by tag if provided
+  const filteredQuotes = tag 
+    ? (quotes as any[]).filter(q => q.tags?.includes(tag))
+    : quotes;
+
+  const allQuotes = filteredQuotes.length > 0 ? filteredQuotes : defaultQuotes;
 
   const handlePrev = () => {
     setCurrentQuote((prev) => (prev === 0 ? allQuotes.length - 1 : prev - 1));
@@ -78,7 +85,7 @@ export function BiographySection({ data, quotes = [], isLoading }: BiographySect
                 (An inside Look)
               </p>
               <h2 className="display-md leading-tight">
-                Mohsin Salya is an entrepreneur and investor with ventures spanning fashion, property, distribution, and luxury assets. His career reflects one principle- discipline builds durability.
+                {descriptionOverride || "Mohsin Salya is an entrepreneur and investor with ventures spanning fashion, property, distribution, and luxury assets. His career reflects one principle- discipline builds durability."}
               </h2>
             </div>
           </div>

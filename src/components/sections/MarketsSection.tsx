@@ -99,8 +99,8 @@ export function MarketsSection({ markets, stats, isLoading }: MarketsSectionProp
         <ScrollReveal>
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="display-xl mb-4 italic">MARKETS WE BUILD IN</h2>
-            <p className="body-md text-muted-foreground max-w-2xl mx-auto">
-              Ventures united by one constant, a commitment to progress, transforming industries through innovation, strategic foresight, and integrity.
+            <p className="body-md text-muted-foreground max-w-3xl mx-auto">
+              Mohsin’s ventures are united by one constant, a commitment to progress, transforming industries through innovation, strategic foresight, and integrity.
             </p>
           </div>
         </ScrollReveal>

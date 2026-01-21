@@ -25,5 +25,5 @@ END $$;
 
 -- Insert default record if none exists
 INSERT INTO newsletter_settings (title, disclaimer, button_text, placeholder_text)
-SELECT 'For The Ones Climbing Back, Turn Bruises Into Billion-Dollar Moves', 'By subscribing, you''ll receive thoughtful updates, insights, and inspiration straight to your inbox. No spam just authentic content and stories worth your time.', 'Start Building', 'Enter Your Email Address'
+SELECT 'Join Mohsin’s circle for real stories, reflections, and insights, where resilience meets results.', 'By subscribing, you''ll receive thoughtful updates, insights, and inspiration straight to your inbox. No spam just authentic content and stories worth your time.', 'Start Building', 'Enter Your Email Address'
 WHERE NOT EXISTS (SELECT 1 FROM newsletter_settings);

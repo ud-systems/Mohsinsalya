@@ -81,7 +81,7 @@ const Insights = () => {
               
               <div className="lg:max-w-xs lg:pt-12">
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  In a world of constant change, Mohsin shares grounded perspectives shaped by three decades of building, adapting, and leading.
+                  Mohsin shares the principles guiding his decisions, offering clarity, discipline, and an experience-driven perspective.
                 </p>
               </div>
             </div>
