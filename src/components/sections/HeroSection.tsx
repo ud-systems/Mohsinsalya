@@ -76,19 +76,16 @@ export function HeroSection({ data, isLoading, videoUrl }: HeroSectionProps) {
               {content.title_line2}
             </h2>
             
-            {/* Description with embedded link */}
+            {/* Description with embedded link and line breaks */}
             <p className="body-sm sm:body-md uppercase tracking-wide leading-relaxed max-w-md ml-auto mt-8 sm:mt-12 text-primary-foreground/80">
-              {(() => {
-                const target = 'ACROSS INDUSTRIES';
-                const parts = content.description.split(new RegExp(`(${target})`, 'i'));
-                return parts.map((part, i) => 
-                  part.toUpperCase() === target ? (
-                    <Link key={i} to="/markets" className="text-white border-b border-white/30 hover:border-white transition-colors">
-                      {part}
-                    </Link>
-                  ) : part
-                );
-              })()}
+              REBUILDING STANDARDS{' '}
+              <Link to="/markets" className="text-white border-b border-white/30 hover:border-white transition-colors">
+                ACROSS INDUSTRIES
+              </Link>
+              <br />
+              FROM THE FABRIC OF FASHION TO THE
+              <br />
+              FOUNDATIONS OF REAL ESTATE
             </p>
           </div>
         </div>
