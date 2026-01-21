@@ -789,22 +789,38 @@ function MilestonesEditor({ data }: { data: any[] }) {
         {data.map((m) => (
           <div key={m.id} className="flex items-center gap-4 p-4 bg-secondary/50 rounded-lg group">
             <Checkbox checked={selectedIds.includes(m.id)} onCheckedChange={() => toggleSelect(m.id)} />
-            <div className="flex-1"><p className="font-medium">{m.milestone_number} - {m.title}</p><p className="text-sm text-muted-foreground line-clamp-1">{m.content}</p></div>
+            <div className="flex-1"><p className="font-medium">{m.milestone_number} - {m.title}</p><div className="text-sm text-muted-foreground line-clamp-1 prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: m.content }} /></div>
             <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"><button onClick={() => duplicateMutation.mutate(m.id)}><Copy className="w-4 h-4" /></button><button onClick={() => { setEditingItem(m); setIsDialogOpen(true); }}><Pencil className="w-4 h-4" /></button></div>
           </div>
         ))}
       </div>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}><DialogContent className="max-w-2xl"><DialogHeader><DialogTitle>{editingItem ? 'Edit Milestone' : 'Add Milestone'}</DialogTitle></DialogHeader>
-        <div className="grid gap-4 py-4">
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}><DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto"><DialogHeader><DialogTitle>{editingItem ? 'Edit Milestone' : 'Add Milestone'}</DialogTitle></DialogHeader>
+        <div className="grid gap-4 py-4 px-1">
           <div className="grid gap-2"><Label>Milestone Number (e.g. 01)</Label><Input id="msNum" defaultValue={editingItem?.milestone_number} /></div>
           <div className="grid gap-2"><Label>Title</Label><Input id="msTitle" defaultValue={editingItem?.title} /></div>
-          <div className="grid gap-2"><Label>Content</Label><Textarea id="msContent" defaultValue={editingItem?.content} rows={6} /></div>
+          <div className="grid gap-2">
+            <Label>Content (Rich Text)</Label>
+            <div className="bg-white min-h-[300px] text-black rounded-md overflow-hidden border">
+              <ReactQuill 
+                theme="snow"
+                value={editingItem?.content || ''}
+                onChange={(content) => {
+                  setEditingItem((prev: any) => ({ ...prev, content }));
+                }}
+                className="h-[250px] mb-12"
+              />
+            </div>
+          </div>
         </div>
         <Button onClick={() => {
           const milestone_number = (document.getElementById('msNum') as HTMLInputElement).value;
           const title = (document.getElementById('msTitle') as HTMLInputElement).value;
-          const content = (document.getElementById('msContent') as HTMLTextAreaElement).value;
-          mutation.mutate({ ...editingItem, milestone_number, title, content });
+          mutation.mutate({ 
+            ...editingItem, 
+            milestone_number, 
+            title, 
+            content: editingItem?.content || ''
+          });
         }}>Save Milestone</Button>
       </DialogContent></Dialog>
     </div>

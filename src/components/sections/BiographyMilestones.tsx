@@ -145,9 +145,10 @@ export function BiographyMilestones({ milestones, isLoading }: BiographyMileston
                     </h2>
                     
                     <div className="max-w-3xl">
-                      <p className="text-black/80 text-base md:text-2xl leading-relaxed font-serif">
-                        {milestone.content}
-                      </p>
+                      <div 
+                        className="text-black/80 text-base md:text-2xl leading-relaxed font-serif prose prose-invert max-w-none prose-p:text-black/80 prose-p:font-serif prose-p:leading-relaxed prose-p:text-base md:prose-p:text-2xl"
+                        dangerouslySetInnerHTML={{ __html: milestone.content }} 
+                      />
                     </div>
                   </motion.div>
                 )}
